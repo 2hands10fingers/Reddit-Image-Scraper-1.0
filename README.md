@@ -1,2 +1,2 @@
 # RedditImageScraper
-Scrapes Reddit Images by specified date
+Scrapes Reddit images by chosen date in a specfied subreddit.
