@@ -4,7 +4,7 @@ import RIScraper
 def urls_by_period(subreddit_name, start_date, end_date):
     
     reddit = RIScraper.bot_login()
-    subreddit = reddit.subreddit('wallpapers')
+    subreddit = reddit.subreddit(subreddit_name)
 
     submissions = subreddit.submissions(
             start=start_date, end=end_date)
