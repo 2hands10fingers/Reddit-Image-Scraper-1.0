@@ -18,7 +18,6 @@ def urls_by_period(subreddit_name, start_date, end_date):
 
 def dlfile(url):
     fileName = str(url).split('/')[-1]
-    #fileName = str(url).rsplit('/', maxsplit=-1)
     with open(fileName, "wb") as file:
         response = get(str(url))
         file.write(response.content)
@@ -35,9 +34,8 @@ def main():
         list_of_urls = []
         list_of_urls.append(url)
         if url.endswith(('.jpg', '.png')):
-        #'.jpg' or '.png' in str(url):
             dlfile(url)
-            #time.sleep(1.0)
+            time.sleep(1.0)
 
 if __name__ == '__main__':
     main()
