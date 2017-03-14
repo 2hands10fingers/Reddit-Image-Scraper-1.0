@@ -31,6 +31,7 @@ Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so 
 Download speeds may vary depending on the length of your selected date range, the Reddit server's current performance, or your current internet speed. You will only be able to select the years 2005 (when Reddit was launched) through the current year. If you want download all of the images for the current day, simply enter the date twice (e.g., 3-14-2017 -- 3-14-2017).
 
 Thank you and enjoy,
+
 2hands10fingers
 
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Reddit_logo_and_wordmark.svg/1280px-Reddit_logo_and_wordmark.svg.png"></img>
