@@ -27,7 +27,15 @@ or
 or
 <pre>$ easy_install RedditImageScraper</pre>
 
-RedditImageScraper uses epochs to work all around the world. You must also install the <strong>Delorean</strong> module in the same way you installed RedditImageScraper.
+<strong>Delorean</strong>
+RedditImageScraper uses epochs to work all around the world. You must also install the <strong>Delorean</strong> module in the same way you installed RedditImageScraper
+
+Example: <pre>$ pip install delorean</pre>
+
+<strong>Obtaining Reddit Access</strong>
+
+Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need open up the config.py file and your add your <i>username</i>, <i>passowrd</i>,<i>client_id</i>,and <i>client secret</i>. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>clinet_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
+
 
 #Notes
 
