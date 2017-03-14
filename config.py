@@ -1,4 +1,5 @@
+#Fill these out to gain access to Reddit's API.
 username = "?????"
 password = "?????"
-client_id = "d1afKtVZrOUJqQ"
-client_secret = "gzjnUQzZ4AtNLCDfAEgwt_17950"
+client_id = "?????"
+client_secret = "?????"
