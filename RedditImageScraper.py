@@ -155,7 +155,7 @@ MSG_END = '\t{} downloaded in {} seconds.\n'
 # ((url, date_string), (url, date_string), (url, date_string) ...)
 def urls_by_period(subreddit_name, start_date, end_date):
 
-    reddit = RIScraper.bot_login()
+    reddit = redditaccess.bot_login()
     subreddit = reddit.subreddit(subreddit_name)
 
     submissions = subreddit.submissions(
