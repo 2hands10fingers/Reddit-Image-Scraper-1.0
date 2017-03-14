@@ -31,6 +31,6 @@ RedditImageScraper uses epochs to work all around the world. You must also insta
 
 #Notes
 
-Download speeds may vary depending on the length of your selected date range or Reddit's current performance. You will only be able to select the years 2005 (when Reddit was launched) through the current year.
+Download speeds may vary depending on the length of your selected date range or the Reddit server's current performance. You will only be able to select the years 2005 (when Reddit was launched) through the current year.
 
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Reddit_logo_and_wordmark.svg/1280px-Reddit_logo_and_wordmark.svg.png"></img>
