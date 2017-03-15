@@ -2,7 +2,6 @@ import redditaccess
 from requests import get
 from delorean import Delorean
 from datetime import datetime
-import pytz
 import os
 import time
 
