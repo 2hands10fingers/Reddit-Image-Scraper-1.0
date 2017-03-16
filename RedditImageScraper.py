@@ -9,20 +9,26 @@ import time
 ### FUNCTION JUNCTION ###
 #########################
 
+def clear_screen():
+    # Check for OS. 'nt' = windows.
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def time_clear_header1():
     time.sleep(0.9)
-    os.system('clear')
+    clear_screen()
     print("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n\t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t \tby pyStudyGroup \t \t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
-
 
 def time_clear_headerSTART():
     time.sleep(0.9)
-    os.system('clear')
+    clear_screen()
     print("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t   DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " "\t \t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
 
 def time_clear_headerEND():
     time.sleep(0.9)
-    os.system('clear')
+    clear_screen()
     print("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " + str(month_e) + "-" + str(day_e) + "-" + str(year_e) + "\t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
 
 ########################
