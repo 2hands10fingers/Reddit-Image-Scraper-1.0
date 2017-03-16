@@ -19,11 +19,11 @@ You can download this repository directly from GitHub and place the files where 
 
 <strong>2. Delorean</strong>
 
-Reddit Image Scraper 1.0 uses epochs to work all around the world at any time. You must also install the <strong>Delorean</strong> module. See availbe instructions <a href="http://delorean.readthedocs.io/en/latest/install.html">here</a>.
+Reddit Image Scraper 1.0 uses epochs to work all around the world at any time. You must also install the <strong>Delorean</strong> module. See available instructions <a href="http://delorean.readthedocs.io/en/latest/install.html">here</a>.
 
 <strong>3. Obtaining Reddit Access</strong>
 
-Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need open up the config.py file and add your <i>username</i>, <i>passowrd</i>, <i>client_id</i>, and <i>client_secret</i>. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>clinet_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
+Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need to open up the config.py file to add your own <i>username</i>, <i>password</i>, <i>client_id</i>, and <i>client_secret</i> to the file. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>client_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
 
 
 # Notes
