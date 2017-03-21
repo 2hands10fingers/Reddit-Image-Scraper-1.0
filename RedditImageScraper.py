@@ -4,6 +4,10 @@ from delorean import Delorean
 from datetime import datetime
 import os
 import time
+import asyncio
+import aiohttp
+import aiofiles
+
 
 #########################
 ### FUNCTION JUNCTION ###
@@ -152,8 +156,86 @@ print(ed_epoch)
 
 # Messages for the downlad_file() function
 MSG_START = 'Downloading file: {}.'
-MSG_END = '\t{} downloaded in {} seconds.\n'
+MSG_END = '\t{} downloaded in {} seconds. Completed at {}.".\n'
 
+# Get submissions
+def get_submissions(subreddit_name, start_date, end_date):
+
+    reddit = redditaccess.bot_login()
+    subreddit = reddit.subreddit(subreddit_name)
+
+    dl_time = datetime.now()
+
+    print("Retrieving submissions")
+    submissions = subreddit.submissions(
+            start=start_date, end=end_date)
+
+    delta = (datetime.now() - dl_time).total_seconds()
+
+    print("Retrieval of submissions took {} seconds.  Completed at {}".format(
+                                                        str(delta), time.strftime("%H:%M:%S")))
+
+    # Returns a generator of submissions.
+    return submissions
+
+# Download image file.
+# Currently only supports direct links to jpg/png
+async def fetch_image(url, date_created, verbose=True):
+    filename = date_created + str(url).split('/')[-1]
+
+    if verbose:
+        print(MSG_START.format(filename))
+
+    async with aiohttp.ClientSession(loop=loop) as session:
+        async with session.get(url) as response:
+            async with aiofiles.open(filename, mode ='wb') as file:
+                dl_time = datetime.now()
+                while True:
+                    chunk = await response.content.read(1024)
+                    if not chunk:
+                        break
+                    await file.write(chunk)
+
+    delta = (datetime.now() - dl_time).total_seconds()
+    if verbose:
+        print(MSG_END.format(filename, str(delta), time.strftime("%H:%M:%S")))
+
+    return
+
+
+# Return date and url from submission.
+def get_date_and_url(submission):
+    url = submission.url
+    date_created = datetime.fromtimestamp(
+            submission.created_utc).strftime('%Y%m%d_%H%M%S_')
+    return [url, date_created]
+
+
+# Main function.  Get the submissions from the subreddit between the
+# specified dates, and then run the parse function on each one.
+async def main():
+
+    submissions = get_submissions(designatedSubReddit, bd_epoch, ed_epoch)
+
+    img_urls = [get_date_and_url(submission)
+                for submission in submissions
+                if submission.url.endswith((".jpg", ".png", ".jpeg"))
+                ]
+
+    tasks = [
+        asyncio.ensure_future(fetch_image(url, date_created))
+        for url, date_created in img_urls
+    ]
+
+    await asyncio.wait(tasks)
+
+# Start loop
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+
+"""
 # Returns a list of urls posted to the subreddit_name
 # between start_date and end_date.
 # The list is in the form:
@@ -163,8 +245,15 @@ def urls_by_period(subreddit_name, start_date, end_date):
     reddit = redditaccess.bot_login()
     subreddit = reddit.subreddit(subreddit_name)
 
+    dl_time = datetime.now()
+
+    print("Retrieving submissions")
     submissions = subreddit.submissions(
             start=start_date, end=end_date)
+
+    delta = (datetime.now() - dl_time).total_seconds()
+
+    print("Retrieval of submissions took {} seconds".format(str(delta)))
 
     # ret_list is the list I will return
     ret_list = list()
@@ -176,13 +265,18 @@ def urls_by_period(subreddit_name, start_date, end_date):
     # file names with creation dates
     # so the downloaded files could be
     # easier organized later.
+    start_sub_time = datetime.now()
+
     for submission in submissions:
-        file_list = list()
-        file_list.append(submission.url)
         date_created = datetime.fromtimestamp(
-                submission.created_utc).strftime('%Y%m%d_%H%M%S_')
-        file_list.append(date_created)
-        ret_list.append(file_list)
+              submission.created_utc).strftime('%Y%m%d_%H%M%S_')
+        print(submission.url)
+        ret_list.append(submission.url)
+
+    total_sub_time = (datetime.now() - start_sub_time).total_seconds()
+    print("Total submission storage of {} submissions took {} seconds".format(len(ret_list), total_sub_time))
+
+
 
     return ret_list
 
@@ -232,6 +326,6 @@ def main():
         if url.endswith(('.jpg', '.png')):
             download_file(url, date_created, verbose=True)
 
-
 if __name__ == '__main__':
     main()
+"""
