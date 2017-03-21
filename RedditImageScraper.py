@@ -2,8 +2,13 @@ import redditaccess
 from requests import get
 from delorean import Delorean
 from datetime import datetime
-import os
+import os, sys
 import time
+import asyncio
+import aiohttp
+import aiofiles
+import argparse
+
 
 #########################
 ### FUNCTION JUNCTION ###
@@ -152,86 +157,122 @@ print(ed_epoch)
 
 # Messages for the downlad_file() function
 MSG_START = 'Downloading file: {}.'
-MSG_END = '\t{} downloaded in {} seconds.\n'
+MSG_END = '\t{} downloaded in {} seconds. Completed at {}.\n'
 
-# Returns a list of urls posted to the subreddit_name
-# between start_date and end_date.
-# The list is in the form:
-# ((url, date_string), (url, date_string), (url, date_string) ...)
-def urls_by_period(subreddit_name, start_date, end_date):
+
+# Get submissions
+def get_submissions(subreddit_name, start_date, end_date, verbose):
 
     reddit = redditaccess.bot_login()
     subreddit = reddit.subreddit(subreddit_name)
 
+    dl_time = datetime.now()
+
+    print("Retrieving submissions from {}. Started at {}".format(subreddit_name, time.strftime("%H:%M:%S")))
     submissions = subreddit.submissions(
             start=start_date, end=end_date)
 
-    # ret_list is the list I will return
-    ret_list = list()
+    delta = (datetime.now() - dl_time).total_seconds()
 
-    # for each url I add (url, datetime)
-    # to ret_list. I first added this
-    # for testing purposes.
-    # but I think it can be used to prepend
-    # file names with creation dates
-    # so the downloaded files could be
-    # easier organized later.
-    for submission in submissions:
-        file_list = list()
-        file_list.append(submission.url)
-        date_created = datetime.fromtimestamp(
-                submission.created_utc).strftime('%Y%m%d_%H%M%S_')
-        file_list.append(date_created)
-        ret_list.append(file_list)
+    if verbose:
+        print("Retrieval of submissions took {} seconds.  Completed at {}".format(
+                                                        str(delta), time.strftime("%H:%M:%S")))
 
-    return ret_list
+    # Returns a generator of submissions.
+    return submissions
 
-
-# Download the file for a given url.
-# Prepend the post creation date to the file name.
-# The file is saved in the same directory
-# this script is in.
-# If verbose is True the script prints:
-# The name of the file being downloaded
-# The file download time.
-def download_file(url, date_created, verbose=False):
-
+# Download image.  Function actually downloads every url and saves it onto disk.
+# Does not discriminate on what to download.  Saves file with the "date_created"
+# parameter and the url.
+async def fetch_image(url, date_created, verbose):
     filename = date_created + str(url).split('/')[-1]
 
+    # Shows what is being downloaded.
     if verbose:
         print(MSG_START.format(filename))
 
-    with open(filename, "wb") as file:
+    # Opens url and a file using aiohttp and aiofiles.
+    # Reads the content 1024 chunks at a time so that content is downloaded
+    # and written to disk asynchronously. Normal file writing is I/O blocking.
+    async with aiohttp.ClientSession(loop=loop) as session:
+        async with session.get(url) as response:
+            async with aiofiles.open(filename, mode ='wb') as file:
+                dl_time = datetime.now()
+                while True:
+                    chunk = await response.content.read(1024)
+                    if not chunk:
+                        break
+                    await file.write(chunk)
 
-        dl_time = datetime.now()
+    # Prints out how long each file took to download.
+    # Timing times each co-routine with its own local variables, so there is no
+    # mixing up of printing from other co-routines.
+    delta = (datetime.now() - dl_time).total_seconds()
+    if verbose:
+        print(MSG_END.format(filename, str(delta), time.strftime("%H:%M:%S")))
 
-        response = get(str(url))
-        file.write(response.content)
-
-        delta = (datetime.now() - dl_time).total_seconds()
-
-        if verbose:
-            print(MSG_END.format(filename, str(delta)))
-
-        dl_time = datetime.now()
-
-def main():
-
-    urls = urls_by_period(
-            designatedSubReddit,
-            bd_epoch,
-            ed_epoch)
-
-    # You don't need to convert the urls list
-    #because it is already a list. Sorry guys!
-    # url[0] is the actual url
-    # url[1] is the date the image was posted
-    for url_list in urls:
-        url = url_list[0]
-        date_created = url_list[1]
-        if url.endswith(('.jpg', '.png')):
-            download_file(url, date_created, verbose=True)
+    return
 
 
-if __name__ == '__main__':
-    main()
+# Return list of image urls and dates from given submission.
+def get_urls_and_dates(submissions):
+
+    # List that we'll return at the end.
+    urls_and_dates = []
+
+    # Loop through the submissions here. TODO: Figure out a way to loop through the submissions faster.
+    for submission in submissions:
+
+        # Want to call this as least as possible since it is an API call I believe?
+        url = submission.url
+
+        # Only add jpgs, png, and jpegs to list.
+        if url.endswith((".jpg", ".png", ".jpeg")):
+            date_created = datetime.fromtimestamp(
+                submission.created_utc).strftime('%Y%m%d_%H%M%S_')
+            urls_and_dates.append([url, date_created])
+
+    return urls_and_dates
+
+
+# Can easily expand amount of args using the verbosity as a baseline example.
+def get_args(args):
+    parser = argparse.ArgumentParser(description="Finds all submissions between "
+                                                 "given dates and downloads urls"
+                                                 "that end in .jpg, jpeg, and png.")
+
+    parser.add_argument('-v', '--verbose', action='store_true', help='Print verbose output.', default=False)
+
+    # TODO: Probably add in a -h argument eventually.
+    return parser.parse_args(args)
+
+# Main function.  Get the submissions from the subreddit between the
+# specified dates, and then run the parse function on each one.
+async def main(args):
+
+    # Get our args stored in parser.
+    parser = get_args(args)
+
+    # Our first arg! For now, just verbosity. Can easily expand.
+    verbose = parser.verbose
+
+    # Initializes the Reddit object and gets the subssions between given dates from it.
+    submissions = get_submissions(designatedSubReddit, bd_epoch, ed_epoch, verbose)
+
+    # Get our list of urls to go and download.
+    img_urls = get_urls_and_dates(submissions)
+
+    # Start throwing in the tasks for our loop to download.
+    tasks = [
+            asyncio.ensure_future(fetch_image(url, date_created, verbose))
+            for url, date_created in img_urls
+        ]
+
+    # This will make the loop wait for all of the tasks above to finish before finishing main()
+    await asyncio.wait(tasks)
+
+if __name__ == "__main__":
+
+    # Start the loop!!!
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main(sys.argv[1:]))
