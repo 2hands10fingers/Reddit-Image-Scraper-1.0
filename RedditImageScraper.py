@@ -2,8 +2,9 @@ import redditaccess
 from requests import get
 from delorean import Delorean
 from datetime import datetime
-import os
+import os, sys
 import time
+import argparse
 
 #########################
 ### FUNCTION JUNCTION ###
@@ -154,6 +155,7 @@ print(ed_epoch)
 MSG_START = 'Downloading file: {}.'
 MSG_END = '\t{} downloaded in {} seconds.\n'
 
+
 # Returns a list of urls posted to the subreddit_name
 # between start_date and end_date.
 # The list is in the form:
@@ -194,7 +196,7 @@ def urls_by_period(subreddit_name, start_date, end_date):
 # If verbose is True the script prints:
 # The name of the file being downloaded
 # The file download time.
-def download_file(url, date_created, verbose=False):
+def download_file(url, date_created, verbose):
 
     filename = date_created + str(url).split('/')[-1]
 
@@ -215,7 +217,28 @@ def download_file(url, date_created, verbose=False):
 
         dl_time = datetime.now()
 
-def main():
+
+# Can easily expand amount of args using the verbosity as a baseline example.
+def get_args(args):
+    parser = argparse.ArgumentParser(description="Finds all submissions between "
+                                                 "given dates and downloads urls"
+                                                 "that end in .jpg, jpeg, and png.")
+
+    # Add arguments here.
+    parser.add_argument('-v', '--verbose', action='store_true', help='Print verbose output.', default=False)
+
+    # Return the parse object. TODO: Probably add in a -h argument eventually.
+    return parser.parse_args(args)
+
+# Main function.  Get the submissions from the subreddit between the
+# specified dates, and then run the parse function on each one.
+def main(args):
+
+    # Get our args stored in parser.
+    parser = get_args(args)
+
+    # Our first arg! For now, just verbosity.
+    verbose = parser.verbose
 
     urls = urls_by_period(
             designatedSubReddit,
@@ -230,8 +253,8 @@ def main():
         url = url_list[0]
         date_created = url_list[1]
         if url.endswith(('.jpg', '.png')):
-            download_file(url, date_created, verbose=True)
+            download_file(url, date_created, verbose)
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
