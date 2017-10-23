@@ -23,7 +23,7 @@ Reddit Image Scraper 1.0 uses epochs to work all around the world at any time. Y
 
 <strong>3. Obtaining Reddit Access</strong>
 
-Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need to open up the config.py file to add your own <i>username</i>, <i>password</i>, <i>client_id</i>, and <i>client_secret</i> to the file. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>client_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
+Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need to copy the config.py.sample to config.py then open up the config.py file to add your own <i>username</i>, <i>password</i>, <i>client_id</i>, and <i>client_secret</i> to the file. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>client_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
 
 
 # Notes
