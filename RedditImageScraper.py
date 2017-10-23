@@ -231,6 +231,8 @@ def main():
         date_created = url_list[1]
         if url.endswith(('.jpg', '.png')):
             download_file(url, date_created, verbose=True)
+     
+    print("\n Thanks for using Reddit Image Scraper 1.0 \n")
 
 
 if __name__ == '__main__':
