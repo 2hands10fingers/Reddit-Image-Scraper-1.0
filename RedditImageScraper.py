@@ -52,9 +52,9 @@ def set_date_range(month):
     days_31 = [1, 3, 5, 7, 8, 10, 12]
     days_30 = [4, 6, 9, 11]
     if month in days_31:
-        valid_range = range(1, 31)
+        valid_range = range(1, 32)
     elif month in days_30:
-        valid_range = range(1, 30)
+        valid_range = range(1, 31)
     else:
         # February. I'll figure out leap years later.
         valid_range = range(1, 29)
