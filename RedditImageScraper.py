@@ -67,7 +67,7 @@ def valid(date, range):
 ########################
 
 #Values
-year_range = range(2005, int(datetime.now().year +1))
+year_range = range(2005, int(datetime.now().year))
 month_range = range(1, 13)
 
 #Messages
