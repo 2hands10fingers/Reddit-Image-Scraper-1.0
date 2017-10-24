@@ -52,7 +52,7 @@ def validateStartMonth(month_b):
         month_b = int(input('\n\tNow, how about a month: '))
     return month_b
 
-def validateStartDay(day_b):
+def validateStartDay(day_b, date_range):
     while not day_b in date_range:
         print("\n\tWoops! Try entering a valid number. " + str(day_b) + " was not a valid number.")
         time.sleep(2)
@@ -77,13 +77,26 @@ def validateEndMonth(month_e):
         month_e = int(input('\n\tNow, how about a month: '))
     return month_e
 
-def validateEndDay(day_e):
+def validateEndDay(day_e, date_range):
     while not day_e in date_range:
         print("\n\tWoops! Try entering a valid number. " + str(day_e) + " was not a valid number.")
         time.sleep(2)
         time_clear_header1()
         day_e = int(input('\n\tLastly, enter the day: '))
     return day_e        
+
+#Helper Functions
+def setDateRange(month):
+    days_31 = [1, 3, 5, 7, 8, 10, 12]
+    days_30 = [4, 6, 9, 11]
+    if month in days_31:
+        date_range = range(1, 31)
+    elif month in days_30:
+        date_range = range(1, 30)
+    else:
+        # February. I'll figure out leap years later.
+        date_range = range(1, 29)
+    return date_range
 
 ########################
 ### START DATE LOGIC ###
@@ -97,6 +110,7 @@ year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'
 year_b = validateStartYear(year_b)
 
 print ("\n\tExcellent! " + str(year_b) + " is a great year.")
+
 time_clear_header1()
 
 month_b = int(input('\n\tNow, how about a month: '))
@@ -106,21 +120,11 @@ month_b = validateStartMonth(month_b)
 print ("\n\tWe'll accept that")
 time_clear_header1()
 
-# I'll refactor this part in a function once we get it working.
-days_31 = [1, 3, 5, 7, 8, 10, 12]
-days_30 = [4, 6, 9, 11]
-
-if month_b in days_31:
-    date_range = range(1, 32)
-elif month_b in days_30:
-    date_range = range(1, 31)
-else:
-    # February. I'll figure out leap years later.
-    date_range = range(1, 29)
+date_range = setDateRange(month_b)
 
 day_b = int(input('\n\tLastly, enter the day: '))
 
-day_b = validateStartDay(day_b)
+day_b = validateStartDay(day_b, date_range)
 
 print ("\n\tLooks good to us.")
 print("\n\n\tYou have selected a start date of: " + str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ "\n\n\tIs this correct? We hope so!")
@@ -146,18 +150,12 @@ month_e = validateEndMonth(month_e)
 print ("\n\tWe'll accept that")
 time_clear_header1()
 time_clear_headerSTART()
-# copy/paste from above. Needs to be in a function.
-if month_e in days_31:
-    date_range = range(1, 31)
-elif month_e in days_30:
-    date_range = range(1, 30)
-else:
-    # February. I'll figure out leap years later.
-    date_range = range(1, 28)
+
+date_range = setDateRange(month_e)
 
 day_e = int(input('\n\tLastly, enter the day: '))
 
-day_e = validateEndDay(day_e)
+day_e = validateEndDay(day_e, date_range)
 
 print ("\n\tLooks good to us.")
 time_clear_headerEND()
