@@ -59,8 +59,8 @@ def set_date_range(month):
         date_range = range(1, 29)
     return date_range
 
-def valid(date, range):
-    return (date in range)
+def valid(date, date_range):
+    return (date in date_range)
 
 ########################
 ###     CONSTANTS    ###
