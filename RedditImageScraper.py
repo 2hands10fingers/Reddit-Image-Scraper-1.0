@@ -85,7 +85,11 @@ def validateEndDay(day_e, date_range):
         day_e = int(input('\n\tLastly, enter the day: '))
     return day_e        
 
-#Helper Functions
+
+########################
+### HELPER FUNCTIONS ###
+########################
+
 def setDateRange(month):
     days_31 = [1, 3, 5, 7, 8, 10, 12]
     days_30 = [4, 6, 9, 11]
