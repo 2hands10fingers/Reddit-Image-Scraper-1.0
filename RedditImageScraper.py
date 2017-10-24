@@ -32,6 +32,60 @@ def time_clear_headerEND():
     print("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " + str(month_e) + "-" + str(day_e) + "-" + str(year_e) + "\t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
 
 ########################
+###   VALIDATORS     ###
+########################
+
+# START
+def validateStartYear(year_b):
+    while not year_b in range(2005, int(datetime.now().year +1)):
+        print("\n\tWoops! Try entering a valid number. " + str(year_b) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'))
+    return year_b
+
+def validateStartMonth(month_b):
+    while not month_b in range(1, 13):
+        print("\n\n\tWoops! Try entering a valid number. " + str(month_b) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        month_b = int(input('\n\tNow, how about a month: '))
+    return month_b
+
+def validateStartDay(day_b):
+    while not day_b in date_range:
+        print("\n\tWoops! Try entering a valid number. " + str(day_b) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        day_b = int(input('\n\tLastly, enter the day: '))
+    return day_b
+
+# END
+def validateEndYear(year_e):
+    while not year_e in range(2005, int(datetime.now().year +1)):
+        print("\n\tWoops! \nWoops! Try entering a valid number. " + str(year_e) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        year_e = int(input('\n\tEnter the year you would like to END your range: \n\t'))
+    return year_e
+
+def validateEndMonth(month_e):
+    while not month_e in range(1, 13):
+        print("\n\n\tWoops! Try entering a valid number. " + str(month_e) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        month_e = int(input('\n\tNow, how about a month: '))
+    return month_e
+
+def validateEndDay(day_e):
+    while not day_e in date_range:
+        print("\n\tWoops! Try entering a valid number. " + str(day_e) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        day_e = int(input('\n\tLastly, enter the day: '))
+    return day_e        
+
+########################
 ### START DATE LOGIC ###
 ########################
 
@@ -40,22 +94,14 @@ time_clear_header1()
 
 year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'))
 
-while not year_b in range(2005, int(datetime.now().year +1)):
-    print("\n\tWoops! Try entering a valid number. " + str(year_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'))
+year_b = validateStartYear(year_b)
 
 print ("\n\tExcellent! " + str(year_b) + " is a great year.")
 time_clear_header1()
 
 month_b = int(input('\n\tNow, how about a month: '))
 
-while not month_b in range(1, 13):
-    print("\n\n\tWoops! Try entering a valid number. " + str(month_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    month_b = int(input('\n\tNow, how about a month: '))
+month_b = validateStartMonth(month_b)
 
 print ("\n\tWe'll accept that")
 time_clear_header1()
@@ -73,11 +119,8 @@ else:
     date_range = range(1, 29)
 
 day_b = int(input('\n\tLastly, enter the day: '))
-while not day_b in date_range:
-    print("\n\tWoops! Try entering a valid number. " + str(day_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    day_b = int(input('\n\tLastly, enter the day: '))
+
+day_b = validateStartDay(day_b)
 
 print ("\n\tLooks good to us.")
 print("\n\n\tYou have selected a start date of: " + str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ "\n\n\tIs this correct? We hope so!")
@@ -91,22 +134,14 @@ time_clear_headerSTART()
 
 year_e = int(input('\n\tEnter the year you would like to END your range: \n\t'))
 
-while not year_e in range(2005, int(datetime.now().year +1)):
-    print("\n\tWoops! \nWoops! Try entering a valid number. " + str(year_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    year_e = int(input('\n\tEnter the year you would like to END your range: \n\t'))
+year_e = validateEndYear(year_e)
 
 print ("\n\tExcellent! " + str(year_e) + " is a great year. Just like " + str(year_b) +"!")
 time_clear_headerSTART()
 
 month_e = int(input('\n\tNow, how about a month: '))
 
-while not month_e in range(1, 13):
-    print("\n\n\tWoops! Try entering a valid number. " + str(month_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    month_e = int(input('\n\tNow, how about a month: '))
+month_e = validateEndMonth(month_e)
 
 print ("\n\tWe'll accept that")
 time_clear_header1()
@@ -122,11 +157,7 @@ else:
 
 day_e = int(input('\n\tLastly, enter the day: '))
 
-while not day_e in date_range:
-    print("\n\tWoops! Try entering a valid number. " + str(day_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    day_e = int(input('\n\tLastly, enter the day: '))
+day_e = validateEndDay(day_e)
 
 print ("\n\tLooks good to us.")
 time_clear_headerEND()
