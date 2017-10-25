@@ -32,52 +32,74 @@ def time_clear_headerEND():
     print("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " + str(month_e) + "-" + str(day_e) + "-" + str(year_e) + "\t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
 
 ########################
+###   VALIDATORS     ###
+########################
+
+def validate_date(valid_range,message):
+    selected_date = int(input(message))
+    while not valid(selected_date,valid_range):
+        print("\n\tWoops! Try entering a valid number. " + str(selected_date) + " was not a valid number.")
+        time.sleep(2)
+        time_clear_header1()
+        selected_date = int(input(message))
+    return selected_date
+
+########################
+### HELPER FUNCTIONS ###
+########################
+
+def set_date_range(month):
+    days_31 = [1, 3, 5, 7, 8, 10, 12]
+    days_30 = [4, 6, 9, 11]
+    if month in days_31:
+        valid_range = range(1, 32)
+    elif month in days_30:
+        valid_range = range(1, 31)
+    else:
+        # February. I'll figure out leap years later.
+        valid_range = range(1, 29)
+    return valid_range
+
+def valid(selected_date, valid_range):
+    return (selected_date in valid_range)
+
+########################
+###     CONSTANTS    ###
+########################
+
+#Values
+year_range = range(2005, int(datetime.now().year)+1)
+month_range = range(1, 13)
+
+#Messages
+year_start_msg = '\n\tEnter the year you would like to START your range: \n\t'
+year_end_msg = '\n\tEnter the year you would like to END your range: \n\t'
+
+month_msg = '\n\tNow, how about a month: '
+
+day_msg = '\n\tLastly, enter the day: '
+
+########################
 ### START DATE LOGIC ###
 ########################
 
 time.sleep(0.2)
 time_clear_header1()
 
-year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'))
-
-while not year_b in range(2005, int(datetime.now().year +1)):
-    print("\n\tWoops! Try entering a valid number. " + str(year_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    year_b = int(input('\n\tEnter the year you would like to START your range: \n\t'))
+year_b = validate_date(year_range, year_start_msg)
 
 print ("\n\tExcellent! " + str(year_b) + " is a great year.")
+
 time_clear_header1()
 
-month_b = int(input('\n\tNow, how about a month: '))
-
-while not month_b in range(1, 13):
-    print("\n\n\tWoops! Try entering a valid number. " + str(month_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    month_b = int(input('\n\tNow, how about a month: '))
+month_b = validate_date(month_range, month_msg)
 
 print ("\n\tWe'll accept that")
 time_clear_header1()
 
-# I'll refactor this part in a function once we get it working.
-days_31 = [1, 3, 5, 7, 8, 10, 12]
-days_30 = [4, 6, 9, 11]
+date_range = set_date_range(month_b)
 
-if month_b in days_31:
-    date_range = range(1, 32)
-elif month_b in days_30:
-    date_range = range(1, 31)
-else:
-    # February. I'll figure out leap years later.
-    date_range = range(1, 29)
-
-day_b = int(input('\n\tLastly, enter the day: '))
-while not day_b in date_range:
-    print("\n\tWoops! Try entering a valid number. " + str(day_b) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    day_b = int(input('\n\tLastly, enter the day: '))
+day_b = validate_date(date_range, day_msg)
 
 print ("\n\tLooks good to us.")
 print("\n\n\tYou have selected a start date of: " + str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ "\n\n\tIs this correct? We hope so!")
@@ -89,44 +111,20 @@ time.sleep(2.0)
 
 time_clear_headerSTART()
 
-year_e = int(input('\n\tEnter the year you would like to END your range: \n\t'))
-
-while not year_e in range(2005, int(datetime.now().year +1)):
-    print("\n\tWoops! \nWoops! Try entering a valid number. " + str(year_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    year_e = int(input('\n\tEnter the year you would like to END your range: \n\t'))
+year_e = validate_date(year_range, year_end_msg)
 
 print ("\n\tExcellent! " + str(year_e) + " is a great year. Just like " + str(year_b) +"!")
 time_clear_headerSTART()
 
-month_e = int(input('\n\tNow, how about a month: '))
-
-while not month_e in range(1, 13):
-    print("\n\n\tWoops! Try entering a valid number. " + str(month_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    month_e = int(input('\n\tNow, how about a month: '))
+month_e = validate_date(month_range, month_msg)
 
 print ("\n\tWe'll accept that")
 time_clear_header1()
 time_clear_headerSTART()
-# copy/paste from above. Needs to be in a function.
-if month_e in days_31:
-    date_range = range(1, 31)
-elif month_e in days_30:
-    date_range = range(1, 30)
-else:
-    # February. I'll figure out leap years later.
-    date_range = range(1, 28)
 
-day_e = int(input('\n\tLastly, enter the day: '))
+date_range = set_date_range(month_e)
 
-while not day_e in date_range:
-    print("\n\tWoops! Try entering a valid number. " + str(day_e) + " was not a valid number.")
-    time.sleep(2)
-    time_clear_header1()
-    day_e = int(input('\n\tLastly, enter the day: '))
+day_e = validate_date(date_range, day_msg)
 
 print ("\n\tLooks good to us.")
 time_clear_headerEND()
@@ -135,6 +133,7 @@ designatedSubReddit = input('\n\t At last, what subreddit would you like to scra
 
 print("\n\t \t   Downloading images from /r/" + str(designatedSubReddit) + "... \n\n\t    ___________________________________________\n\n \t\t\t\t*** \n")
 time.sleep(2.0)
+
 ########################
 ##### INPUT PROCESSING #
 ########################
