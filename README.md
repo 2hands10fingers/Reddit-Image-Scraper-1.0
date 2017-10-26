@@ -1,5 +1,5 @@
 # Reddit Image Scraper 1.0 brought to you by <a href="http://www.pystudygroup.com/">pyStudyGroup</a>
-<i>Credits: <a href="https://github.com/2hands10fingers">/u/2hands10fingers</a>, <a href="https://github.com/Anonimista">/u/Joe_Anonimist</a>, <a href="https://github.com/Belonias">/u/iakovosbelonias</a></i>
+<i>Credits: <a href="https://github.com/2hands10fingers">/u/2hands10fingers</a>, <a href="https://github.com/Anonimista">/u/Joe_Anonimist</a>, <a href="https://github.com/Belonias">/u/iakovosbelonias</a>, <a href="https://github.com/tjcim">iakov</a></i>
 
 Scrapes Reddit images from any public subreddit by a user-specified date range and saves them to your computer.
 
