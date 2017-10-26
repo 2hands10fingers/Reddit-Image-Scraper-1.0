@@ -16,13 +16,13 @@ def make_multiple_inputs(inputs):
 def test_functional(capfd, monkeypatch):
     """ Does a functional test of the script. """
     monkeypatch.setitem(__builtins__, 'input', make_multiple_inputs(
-        deque(["2017", "10", "23", "2017", "10", "23", "python"])))
+        deque(["2017", "10", "23", "2017", "10", "23", "wallpapers"])))
     RSI.main()
     out, _ = capfd.readouterr()
 
     # Check that the app states we have downloaded the file
-    assert "20171022_202306_c8y9b4m8phtz.png downloaded" in out
+    assert "20171023_160820_a74ga3j0lntz.png downloaded" in out
     # Check that we downloaded the expected number of images
-    assert "You downloaded a total of 1 images." in out
+    assert "You downloaded a total of 13 images." in out
     # Check that the file is now present
-    assert os.path.isfile("20171022_202306_c8y9b4m8phtz.png")
+    assert os.path.isfile("20171023_160820_a74ga3j0lntz.png")
