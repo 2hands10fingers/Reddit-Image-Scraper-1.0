@@ -21,8 +21,8 @@ def test_functional(capfd, monkeypatch):
     out, _ = capfd.readouterr()
 
     # Check that the app states we have downloaded the file
-    assert "20171023_160820_a74ga3j0lntz.png downloaded" in out
+    assert "20171023_220820_a74ga3j0lntz.png downloaded" in out
     # Check that we downloaded the expected number of images
     assert "You downloaded a total of 13 images." in out
     # Check that the file is now present
-    assert os.path.isfile("20171023_160820_a74ga3j0lntz.png")
+    assert os.path.isfile("20171023_220820_a74ga3j0lntz.png")

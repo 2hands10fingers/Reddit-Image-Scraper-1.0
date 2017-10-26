@@ -89,7 +89,7 @@ def urls_by_period(subreddit_name, start_date, end_date):
     for submission in submissions:
         file_list = list()
         file_list.append(submission.url)
-        date_created = datetime.fromtimestamp(
+        date_created = datetime.utcfromtimestamp(
                 submission.created_utc).strftime('%Y%m%d_%H%M%S_')
         file_list.append(date_created)
         ret_list.append(file_list)
