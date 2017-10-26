@@ -1,4 +1,6 @@
 # Added so that the OAUTH creds don't accidentally get submitted
+*.png
+*.jpg
 config.py
 
 

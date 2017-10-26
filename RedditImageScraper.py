@@ -89,7 +89,7 @@ def urls_by_period(subreddit_name, start_date, end_date):
     for submission in submissions:
         file_list = list()
         file_list.append(submission.url)
-        date_created = datetime.fromtimestamp(
+        date_created = datetime.utcfromtimestamp(
                 submission.created_utc).strftime('%Y%m%d_%H%M%S_')
         file_list.append(date_created)
         ret_list.append(file_list)
@@ -226,12 +226,15 @@ def main():
     #because it is already a list. Sorry guys!
     # url[0] is the actual url
     # url[1] is the date the image was posted
+    total_downloaded = 0
     for url_list in urls:
         url = url_list[0]
         date_created = url_list[1]
         if url.endswith(('.jpg', '.png')):
             download_file(MSG_START, MSG_END, url, date_created, verbose=True)
+            total_downloaded += 1
 
+    print("\n You downloaded a total of {} images.\n".format(total_downloaded))
     print("\n Thanks for using Reddit Image Scraper 1.0 \n")
 
 
