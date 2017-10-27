@@ -17,14 +17,31 @@ Use Python 3 to scrape any .jpg or .png images in the available subreddit (you c
 
 You can download this repository directly from GitHub and place the files where you want to run the program from. Remember, where the program is located, that is where your pictures will download to.
 
-<strong>2. Delorean</strong>
+<strong>2. Install Dependencies</strong>
 
-Reddit Image Scraper 1.0 uses epochs to work all around the world at any time. You must also install the <strong>Delorean</strong> module. See available instructions <a href="http://delorean.readthedocs.io/en/latest/install.html">here</a>.
+We make sure things are easy to install and test by using the requirements.txt file. In your terminal, type <code> $ pip install -r requirements.txt</code> and you should have everything you need to get going. 
 
 <strong>3. Obtaining Reddit Access</strong>
 
 Oauth2 is required. Reddit doesn't like anonymous people taking their stuff, so you will need to copy the config.py.sample to config.py then open up the config.py file to add your own <i>username</i>, <i>password</i>, <i>client_id</i>, and <i>client_secret</i> to the file. Please follow Reddit's Oauth2 simple to follow guidelines to grab the <code>client_id</code> and <code>client_secret</code> <a href="https://github.com/reddit/reddit/wiki/OAuth2">here</a>.
 
+
+# Testing
+
+RIS now comes with testing abilities and error logging. We recommend doing this within python3's virtual environement.
+
+Setupping up the virtual environment:
+<code>
+
+$ python3 -m venv env
+
+$ source env/bin/activate
+
+$ pip install -r requirements.txt
+
+$ pytest
+
+</code>
 
 # Notes
 
