@@ -3,6 +3,9 @@
 
 Scrapes Reddit images from any public subreddit by a user-specified date range and saves them to your computer.
 
+<img src="https://i.imgur.com/e2mgH7D.png"></img>
+____
+
 # Introduction
 
 Many tools scrape Reddit but don't give you the power to grab data on your terms. This changes things.
