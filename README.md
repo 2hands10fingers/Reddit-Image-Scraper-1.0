@@ -18,7 +18,7 @@ Use Python 3 to scrape any .jpg or .png images in the available subreddit (you c
 
 <strong>1. Download</strong>
 
-You can download this repository directly from GitHub and place the files where you want to run the program from. Remember, where the program is located, that is where your pictures will download to.
+You can download this repository directly from GitHub and place the files where you want to run the program from. Remember, where the program is located, that is where your pictures will download to. You can change `file_path` in config.py to direct all downloads to that directory.
 
 <strong>2. Install Dependencies</strong>
 
