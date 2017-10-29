@@ -1,5 +1,5 @@
 import redditaccess
-from requests import get
+import requests
 from delorean import Delorean
 from datetime import datetime
 import os
@@ -115,7 +115,7 @@ def download_file(MSG_START, MSG_END, url, date_created, verbose=False):
 
         dl_time = datetime.now()
 
-        response = get(str(url))
+        response = requests.get(str(url))
         file.write(response.content)
 
         delta = (datetime.now() - dl_time).total_seconds()
