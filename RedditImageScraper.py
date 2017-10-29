@@ -1,8 +1,9 @@
+import os
+import config
 import redditaccess
 import requests
 from delorean import Delorean
 from datetime import datetime
-import os
 import time
 
 #########################
@@ -79,7 +80,7 @@ def urls_by_period(subreddit_name, start_date, end_date):
     # ret_list is the list I will return
     ret_list = list()
 
-    # for each url I add (url, datetime)
+    # For each url I add (url, datetime)
     # to ret_list. I first added this
     # for testing purposes.
     # but I think it can be used to prepend
@@ -107,21 +108,26 @@ def urls_by_period(subreddit_name, start_date, end_date):
 def download_file(MSG_START, MSG_END, url, date_created, verbose=False):
 
     filename = date_created + str(url).split('/')[-1]
+    path = os.path.join(config.file_path, filename)
+    response = requests.get(str(url))
 
     if verbose:
         print(MSG_START.format(filename))
 
-    with open(filename, "wb") as file:
+    dl_time = datetime.now()
 
-        dl_time = datetime.now()
-
-        response = requests.get(str(url))
-        file.write(response.content)
-
+    if verbose:
         delta = (datetime.now() - dl_time).total_seconds()
+        print(MSG_END.format(filename, str(delta)))
 
-        if verbose:
-            print(MSG_END.format(filename, str(delta)))
+    dl_time = datetime.now()
+
+    if not response.status_code == 200:
+        return
+
+    with open(path, "wb") as f:
+
+        f.write(response.content)
 
         dl_time = datetime.now()
 
@@ -223,7 +229,7 @@ def main():
             ed_epoch)
 
     # You don't need to convert the urls list
-    #because it is already a list. Sorry guys!
+    # because it is already a list. Sorry guys!
     # url[0] is the actual url
     # url[1] is the date the image was posted
     total_downloaded = 0
@@ -239,4 +245,5 @@ def main():
 
 
 if __name__ == '__main__':
+
     main()
