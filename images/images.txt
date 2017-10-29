@@ -1,1 +1,2 @@
-This is where you images will go. You can set the directory path to be anywhere else on your computer within the config.py file by changing file_path.
+This is where your images will go. 
+You can set the directory path to be anywhere else on your computer within the config.py file by changing file_path.
