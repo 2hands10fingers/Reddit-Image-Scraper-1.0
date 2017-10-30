@@ -117,42 +117,24 @@ def urls_by_period(subreddit_name, start_date, end_date):
 # --------------------------------------------------
 
 # Download the file for a given url.
-# Prepend the post creation date to the file name.
 # The file is saved in the same directory
 # this script is in.
-# If verbose is True the script prints:
-# The name of the file being downloaded
-# The file download time.
+# Returns the download starting time
+# If the request fails, it returns -1
 
-def download_file(MSG_START, MSG_END, url, date_created, verbose=False):
+def download_file(url, date_created, filename):
 
-    filename = date_created + str(url).split('/')[-1]
     path = os.path.join(config.file_path, filename)
-    response = requests.get(str(url))
 
-    if verbose:
+    with open(path, 'wb') as f:
+        start = datetime.now()
+        response = requests.get(url)
 
-        print(MSG_START.format(filename))
-
-    dl_time = datetime.now()
-
-    if verbose:
-
-        delta = (datetime.now() - dl_time).total_seconds()
-
-        print(MSG_END.format(filename, str(delta)))
-
-    dl_time = datetime.now()
-
-    if not response.status_code == 200:
-
-        return
-
-    with open(path, "wb") as f:
+        if not response.status_code == 200:
+            return -1
 
         f.write(response.content)
-
-        dl_time = datetime.now()
+    return start
 
 # --------------------------------------------------
 
@@ -264,8 +246,18 @@ def main():
 
         if url.endswith(('.jpg', '.png')):
 
-            download_file(MSG_START, MSG_END, url,
-                          date_created, verbose=True)
+
+            # Prepend the post creation date to the file name.
+            filename = date_created + str(url).split('/')[-1]
+
+            print(MSG_START.format(filename))
+
+            start = download_file(url,
+                          date_created, filename)
+
+            if start != -1:
+                print(MSG_END.format(filename, str((datetime.now() - start).total_seconds())))
+
             total_downloaded += 1
 
     #Closting statements
