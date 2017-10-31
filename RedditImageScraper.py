@@ -6,6 +6,7 @@ from delorean import Delorean
 from datetime import datetime
 import time
 
+
 #########################
 ### FUNCTION JUNCTION ###
 #########################
@@ -17,40 +18,55 @@ def clear_screen():
     else:
         os.system('clear')
 
+
 def time_clear_header1():
     time.sleep(0.9)
     clear_screen()
-    print ("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n\t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t \tby pyStudyGroup \t \t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
+    print(
+        "\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" +
+        "\n\t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t \tby pyStudyGroup \t \t" + "" + "|" +
+        "\n\t +~____________________________________________~+ \n")
+
 
 def time_clear_headerSTART(month_b, day_b, year_b):
     time.sleep(0.9)
     clear_screen()
-    print ("\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t   DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " "\t \t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
+    print(
+        "\t  .___________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" +
+        "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t   DATE RANGE: " + str(
+            month_b) + "-" + str(day_b) + "-" + str(
+            year_b) + " -- " "\t \t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
+
 
 def time_clear_headerEND(month_b, day_b, year_b, month_e, day_e, year_e):
     time.sleep(0.9)
     clear_screen()
-    print("\t  .____________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" + "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t DATE RANGE: "+ str(month_b) + "-" + str(day_b) + "-" + str(year_b)+ " -- " + str(month_e) + "-" + str(day_e) + "-" + str(year_e) + "\t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
+    print(
+        "\t  .____________________________________________. \n \t / \t \t \t \t \t" + "       \\" + "" +
+        "\n \t|    Welcome to the Reddit Image Scraper 1.0\t| \n \t| \t DATE RANGE: " + str(
+            month_b) + "-" + str(day_b) + "-" + str(year_b) + " -- " + str(month_e) + "-" + str(day_e) + "-" + str(
+            year_e) + "\t" + "" + "|" + "\n\t +~____________________________________________~+ \n")
+
 
 def sleeper(num):
     time.sleep(num)
+
 
 ########################
 ###   VALIDATORS     ###
 ########################
 
 def validate_date(valid_range, message):
-
     selected_date = int(input(message))
 
     while not valid(selected_date, valid_range):
-
-        print ("\n\tWoops! Try entering a valid number. " +
-        str(selected_date) + " was not a valid number.")
+        print("\n\tWoops! Try entering a valid number. " +
+              str(selected_date) + " was not a valid number.")
         sleeper(2)
         time_clear_header1()
 
     return selected_date
+
 
 ########################
 ### HELPER FUNCTIONS ###
@@ -59,7 +75,6 @@ def validate_date(valid_range, message):
 # --------------------------------------------------
 
 def set_date_range(month):
-
     days_31 = [1, 3, 5, 7, 8, 10, 12]
     days_30 = [4, 6, 9, 11]
 
@@ -73,13 +88,14 @@ def set_date_range(month):
 
     else:
 
-        valid_range = range(1, 29) # February. I'll figure out leap years later.
+        valid_range = range(1, 29)  # February. I'll figure out leap years later.
 
     return valid_range
 
-def valid(selected_date, valid_range):
 
+def valid(selected_date, valid_range):
     return selected_date in valid_range
+
 
 # --------------------------------------------------
 
@@ -89,11 +105,10 @@ def valid(selected_date, valid_range):
 # ((url, date_string), (url, date_string), (url, date_string) ...)
 
 def urls_by_period(subreddit_name, start_date, end_date):
-
     reddit = redditaccess.bot_login()
     subreddit = reddit.subreddit(subreddit_name)
     submissions = subreddit.submissions(start=start_date, end=end_date)
-    ret_list = list() # ret_list is the list I will return
+    ret_list = list()  # ret_list is the list I will return
 
     # For each url I add (url, datetime)
     # to ret_list. I first added this
@@ -104,7 +119,6 @@ def urls_by_period(subreddit_name, start_date, end_date):
     # easier organized later.
 
     for submission in submissions:
-
         file_list = list()
         date_created = datetime.utcfromtimestamp(submission.created_utc).strftime('%Y%m%d_%H%M%S_')
 
@@ -113,6 +127,7 @@ def urls_by_period(subreddit_name, start_date, end_date):
         ret_list.append(file_list)
 
     return ret_list
+
 
 # --------------------------------------------------
 
@@ -141,10 +156,10 @@ def download_file(url, date_created, filename, subreddit):
         f.write(response.content)
     return start
 
+
 # --------------------------------------------------
 
 def main():
-
     ########################
     ###     CONSTANTS    ###
     ########################
@@ -153,11 +168,11 @@ def main():
     MSG_START = 'Downloading file: {}.'
     MSG_END = '\t{} downloaded in {} seconds.\n'
 
-    #Values
-    year_range = range(2005, int(datetime.now().year)+1)
+    # Values
+    year_range = range(2005, int(datetime.now().year) + 1)
     month_range = range(1, 13)
 
-    #Messages
+    # Messages
     year_start_msg = '\n\tEnter the year you would like to START your range: \n\t'
     year_end_msg = '\n\tEnter the year you would like to END your range: \n\t'
     month_msg = '\n\tNow, how about a month: '
@@ -185,7 +200,7 @@ def main():
 
     print("\n\tLooks good to us.")
     print("\n\n\tYou have selected a start date of: " + str(month_b) + "-"
-    + str(day_b) + "-" + str(year_b)+ "\n\n\tIs this correct? We hope so!")
+          + str(day_b) + "-" + str(year_b) + "\n\n\tIs this correct? We hope so!")
     sleeper(2.0)
 
     ########################
@@ -217,7 +232,7 @@ def main():
     designatedSubReddit = input('\n\t At last, what subreddit would you like to scrape? \n\n\t www.reddit.com\\r\\')
 
     print("\n\t \t   Downloading images from /r/" + str(designatedSubReddit) +
-    "... \n\n\t    ___________________________________________\n\n \t\t\t\t*** \n")
+          "... \n\n\t    ___________________________________________\n\n \t\t\t\t*** \n")
     sleeper(2.0)
 
     ########################
@@ -229,11 +244,11 @@ def main():
 
     bd_dt = Delorean(datetime=datetime(year_b, month_b,
                                        day_b, 0, 0, 0, 000000),
-                                       timezone='GMT')
+                     timezone='GMT')
     bd_epoch = bd_dt.epoch
     ed_dt = Delorean(datetime=datetime(year_e, month_e, day_e,
                                        23, 59, 0, 000000),
-                                       timezone='GMT')
+                     timezone='GMT')
     ed_epoch = ed_dt.epoch
     urls = urls_by_period(designatedSubReddit,
                           bd_epoch,
@@ -251,26 +266,24 @@ def main():
 
         if url.endswith(('.jpg', '.png')):
 
-
             # Prepend the post creation date to the file name.
             filename = date_created + str(url).split('/')[-1]
 
             print(MSG_START.format(filename))
 
             start = download_file(url,
-                          date_created, filename, designatedSubReddit)
+                                  date_created, filename, designatedSubReddit)
 
             if start != -1:
                 print(MSG_END.format(filename, str((datetime.now() - start).total_seconds())))
 
             total_downloaded += 1
 
-    #Closting statements
+    # Closting statements
     print("---------------------------------------------")
     print("\n You downloaded a total of {} images.\n".format(total_downloaded))
     print("\n Thanks for using Reddit Image Scraper 1.0 \n")
 
 
 if __name__ == '__main__':
-
     main()

@@ -10,6 +10,7 @@ import RedditImageScraper as RSI
 
 class MockUrl:  # pylint: disable=too-few-public-methods
     """ Mocks the url object """
+
     def __init__(self):
         self.created_utc = 1509231116
         self.url = "blah.jpg"
@@ -17,6 +18,7 @@ class MockUrl:  # pylint: disable=too-few-public-methods
 
 class MockSubmissions:  # pylint: disable=too-few-public-methods
     """ Mocks PRAW submission class. """
+
     def submissions(self, start, end):  # pylint: disable=unused-argument, no-self-use
         """ Returns a bunch of mock urls """
         urls = []
@@ -27,6 +29,7 @@ class MockSubmissions:  # pylint: disable=too-few-public-methods
 
 class MockReddit:  # pylint: disable=too-few-public-methods
     """ Mocks PRAW reddit class. """
+
     def subreddit(self, name):  # pylint: disable=no-self-use
         """ returns a MockSubmissions """
         name = MockSubmissions()
@@ -35,15 +38,18 @@ class MockReddit:  # pylint: disable=too-few-public-methods
 
 class MockRequestResponse:  # pylint: disable=too-few-public-methods
     """ Mocks Requests """
+
     def __init__(self):
         self.content = b"blah"
 
 
 def make_multiple_inputs(inputs):
     """ provides a function to call for every input requested. """
+
     def next_input(_):
         """ provides the first item in the list. """
         return inputs.popleft()
+
     return next_input
 
 
@@ -65,6 +71,7 @@ def test_functional(capfd, monkeypatch):
 
 def test_functional_mock(capfd, monkeypatch):
     """ Functional test mocking praw. """
+
     def mockreddit():
         """ mock reddit """
         reddit = MockReddit()
