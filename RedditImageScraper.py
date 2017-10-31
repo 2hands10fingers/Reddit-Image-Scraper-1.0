@@ -122,9 +122,14 @@ def urls_by_period(subreddit_name, start_date, end_date):
 # Returns the download starting time
 # If the request fails, it returns -1
 
-def download_file(url, date_created, filename):
+def download_file(url, date_created, filename, subreddit):
 
-    path = os.path.join(config.file_path, filename)
+    folder = os.path.join(config.file_path, subreddit)
+
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    path = os.path.join(folder, filename)
 
     with open(path, 'wb') as f:
         start = datetime.now()
@@ -253,7 +258,7 @@ def main():
             print(MSG_START.format(filename))
 
             start = download_file(url,
-                          date_created, filename)
+                          date_created, filename, designatedSubReddit)
 
             if start != -1:
                 print(MSG_END.format(filename, str((datetime.now() - start).total_seconds())))
