@@ -1,8 +1,17 @@
-#Fill these out to gain access to Reddit's API.
+#Configure Everything.
+
+
+# Fill these out to gain access to Reddit's API.
+# RIS1.0 requires OAuth2. See here to get set up: 
+# https://github.com/reddit/reddit/wiki/OAuth2
+
 username = "?????"
 password = "?????"
 client_id = "?????"
 client_secret = "?????"
 
-#Define the directory path you want to download your images
+# Define the directory path you want to download your images.
+# I've created an images folder for your convenience.
+# Leaving this blank to be file_path='' will create and download your files by the subreddit you're downloading from.
+
 file_path = 'images'
