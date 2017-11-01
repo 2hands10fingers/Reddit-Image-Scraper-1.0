@@ -137,8 +137,6 @@ def download_file(url, date_created, filename, subreddit):
             response = requests.get(url)
         except requests.exceptions.ConnectionError as e:
             return -1
-        if not response.status_code == 200:
-            return -1
         f.write(response.content)
     return start
 
