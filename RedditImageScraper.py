@@ -264,7 +264,7 @@ def main():
         url = url_list[0]
         date_created = url_list[1]
 
-        if url.endswith(('.jpg', '.png')):
+        if url.endswith(('.jpg', '.png', '.gif')):
 
             # Prepend the post creation date to the file name.
             filename = date_created + str(url).split('/')[-1]
