@@ -279,7 +279,7 @@ def main():
 
             total_downloaded += 1
 
-    # Closting statements
+    # Closing statements
     print("---------------------------------------------")
     print("\n You downloaded a total of {} images.\n".format(total_downloaded))
     print("\n Thanks for using Reddit Image Scraper 1.0 \n")
