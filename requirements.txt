@@ -21,3 +21,4 @@ tzlocal==1.4
 update-checker==0.16
 urllib3==1.22
 wrapt==1.10.11
+bs4==4.4.0
