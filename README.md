@@ -1,4 +1,4 @@
-# W A R N I N G : CRUCICAL FEATURE DEPRECATED. NO LONGER WORKS.
+# W A R N I N G : CRUCIAL FEATURE DEPRECATED. NO LONGER WORKS.
  Unfortunately, Reddit has removed the ability to scan for submissions by date range. This eliminates the usefulness of this program and I'm deeply sorry to anyone who enjoyed using it for their use. Please message Reddit's technical team so we can have it back! Click here for the official announcement: https://www.reddit.com/r/changelog/comments/7tus5f/update_to_search_api/
 
  Thanks -2hands10fingers
