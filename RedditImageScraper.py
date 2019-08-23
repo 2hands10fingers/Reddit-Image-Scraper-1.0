@@ -148,11 +148,10 @@ def download_file(url, date_created, filename, subreddit):
 
     with open(path, 'wb') as f:
         start = datetime.now()
-        response = requests.get(url)
-
-        if not response.status_code == 200:
+        try:
+            response = requests.get(url)
+        except requests.exceptions.ConnectionError as e:
             return -1
-
         f.write(response.content)
     return start
 
