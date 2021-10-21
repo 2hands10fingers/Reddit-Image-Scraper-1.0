@@ -1,5 +1,5 @@
 astroid==1.5.3
-Babel==2.5.1
+Babel==2.9.1
 certifi==2017.7.27.1
 chardet==3.0.4
 Delorean==0.6.0
